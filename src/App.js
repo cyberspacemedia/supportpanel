@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import CustomTheme from './Config/CustomTheme';
+import { BrowserRouter } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import SideMenu from "./Navigation/SideMenu";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Test Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <CustomTheme>
+      <CssBaseline />
+      <BrowserRouter>
+        <SideMenu />
+      </BrowserRouter>
+      </CustomTheme>
+    </>
   );
 }
 
