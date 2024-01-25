@@ -67,7 +67,8 @@ function DashBoard() {
     },
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
+    event.preventDefault();
     const data = {
       id: email,
     };
