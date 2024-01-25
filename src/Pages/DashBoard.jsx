@@ -135,7 +135,7 @@ function DashBoard() {
               </FormControl>
               <Button
                 variant="text"
-                color="primary"
+                color="secondary"
                 onClick={handleSearch}
                 size="small"
                 startIcon={<SearchIcon />}
