@@ -11,6 +11,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <SideMenu />
+        
       </BrowserRouter>
       </CustomTheme>
     </>

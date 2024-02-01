@@ -7,7 +7,7 @@ function SearchOrder() {
   return (
     <Box sx={{ flexGrow: 1, p: 1}}>
 
-      <Typography paragraph>Searc Order</Typography>
+      <Typography paragraph>Search Order</Typography>
       
     </Box>
   )
