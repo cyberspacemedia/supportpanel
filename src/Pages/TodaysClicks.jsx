@@ -43,14 +43,21 @@ function TodaysClicks() {
       width: 300,
       renderCell: (params) => (
         <>
+        <form action="https://app.trafficshield.io/v2/verify_user/index" target="blank" method="post">
+              <input type="hidden" value={params.row.uid} name="UserID" />
+              
+              <input type="hidden" value="https://trafficshield.io/wp-login.php?action=logout&amp;_wpnonce=ffc5871a45" name="Logout_url" />
+
           <Button
             variant="contained"
+            type="submit"
             color="secondary"
             size="small"
             sx={{ height: "25px" }}
           >
             Go To Application
           </Button>
+          </form>
         </>
       ),
     },

@@ -69,39 +69,45 @@ function SearchUser() {
     };
     const userEndpoint = `${apiURL}/searchUser`;
     const orderEndpoint = `${apiURL}/searchOrder`;
+
     setLoading(true);
     try {
       const userResponse = await axios.post(userEndpoint, userData, config);
 
       //console.log(userResponse.data); // User Data
-      setUserInfo(userResponse.data.data);
-      const userId = {
-        id: userResponse.data.data.userInfo.UserID,
-      };
 
-      //console.log(userResponse.data.data.userInfo.UserID); // UID
-      setRecordSet(true);
-      // Another Block for Plans
-      try {
-        const planResponse = await axios.post(orderEndpoint, userId, config);
-        //console.log(planResponse.data.data); // Order Info
-        setOrderInfo(planResponse.data.data.orders);
-      } catch (error) {
-        console.error("ORDER API - Error", error);
-      }
-      // Another Block for Plans
-      setShowSnackBar(true);
-      if (userResponse.data.status === true) {
-        setSnackBarSeverity("success");
+      if (userResponse.data.severity === "warning") {
+        setShowSnackBar(true);
+        setSnackBarSeverity(userResponse.data.severity);
+        setSnackBarMessage(userResponse.data.message);
+        setSnackbarKey((prevKey) => prevKey + 1);
+        setEmail("");
+        setLoading(false);
+        setRecordSet(false);
       } else {
-        setSnackBarSeverity("warning");
+        //console.log(userResponse.data.data.userInfo.UserID); // UID
+        setUserInfo(userResponse.data.data);
+        setRecordSet(true);
+        setShowSnackBar(true);
+        setSnackBarSeverity(userResponse.data.severity);
+        setSnackBarMessage(userResponse.data.message);
+        setSnackbarKey((prevKey) => prevKey + 1);
+        setLoading(false);
+        setEmail("");
+
+        const userId = {
+          id: userResponse.data.data.userInfo.UserID,
+        };
+        // Another Block for Plans
+        try {
+          const planResponse = await axios.post(orderEndpoint, userId, config);
+          //console.log(planResponse.data.data); // Order Info
+          setOrderInfo(planResponse.data.data.orders);
+        } catch (error) {
+          console.error("ORDER API - Error", error);
+        }
+        // Another Block for Plans
       }
-
-      setSnackBarMessage(userResponse.data.message);
-      setSnackbarKey((prevKey) => prevKey + 1);
-
-      setLoading(false);
-      setEmail("");
     } catch (error) {
       setSnackbarKey((prevKey) => prevKey + 1);
       setShowSnackBar(true);
@@ -119,17 +125,16 @@ function SearchUser() {
 
   return (
     <Box sx={{ flexGrow: 1, bgcolor: "#eceff4" }}>
-      <Typography variant="h4">Dashboard</Typography>
-      <Typography variant="h6">Search User by Email ID or UID</Typography>
-      <Divider />
-      {loading && <LinearProgress />}
-
       <SnackBarMsg
         showSnackBar={showSnackBar}
         snackBarSeverity={snackBarSeverity}
         snackBarMessage={snackBarMessage}
         key={snackbarKey}
       />
+      <Typography variant="h4">Dashboard</Typography>
+      <Typography variant="h6">Search User by Email ID or UID</Typography>
+      <Divider />
+      {loading && <LinearProgress />}
 
       <Grid container p={1} spacing={2}>
         <Grid item lg={3} xs={12}>
@@ -181,11 +186,26 @@ function SearchUser() {
                 variant="outlined"
                 icon={<FaceIcon />}
               />
-              <form action="https://app.trafficshield.io/v2/verify_user/index" target="blank" method="post">
-              <input type="hidden" value={userInfo?.userInfo?.UserID} name="UserID" />
-              <input type="hidden" value={userInfo?.userInfo?.UserEmail} name="Email" />
-              <input type="hidden" value="https://trafficshield.io/wp-login.php?action=logout&amp;_wpnonce=ffc5871a45" name="Logout_url" />
-
+              <form
+                action="https://app.trafficshield.io/v2/verify_user/index"
+                target="blank"
+                method="post"
+              >
+                <input
+                  type="hidden"
+                  value={userInfo?.userInfo?.UserID}
+                  name="UserID"
+                />
+                <input
+                  type="hidden"
+                  value={userInfo?.userInfo?.UserEmail}
+                  name="Email"
+                />
+                <input
+                  type="hidden"
+                  value="https://trafficshield.io/wp-login.php?action=logout&amp;_wpnonce=ffc5871a45"
+                  name="Logout_url"
+                />
 
                 {/* Assuming handleFormSubmit is your function */}
                 <Button

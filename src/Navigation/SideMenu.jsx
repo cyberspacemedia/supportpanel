@@ -32,7 +32,7 @@ import SearchUser from "../Pages/SearchUser";
 import SearchOrder from "../Pages/SearchOrder";
 import RefreshUid from "../Pages/RefreshUid";
 import TodaysClicks from "../Pages/TodaysClicks";
-import Test from "../Pages/Test";
+import Test from "../Pages/TestPages/Test";
 
 
 const drawerWidth = 200;
